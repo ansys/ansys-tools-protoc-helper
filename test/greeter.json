@@ -1,0 +1,11 @@
+{
+    "cookiecutter": {
+        "product_name": "greeter",
+        "project_slug": "ansys-greeter-protos",
+        "api_version": "0",
+        "protos_dir": "../greeter",
+        "proto_dependencies": {
+            "modules": ["ansys-hello-protos"]
+        }
+    }
+}

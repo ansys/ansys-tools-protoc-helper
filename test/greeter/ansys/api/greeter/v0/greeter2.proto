@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+import "ansys/api/hello/v0/hello2.proto";
+
+service Greeter2 {
+    rpc SayHello(Hello2) returns (Hello2);
+}
