@@ -1,6 +1,12 @@
-# check spelling, codestyle
 name: GitHub CI
-on: [push, pull_request]
+# run only on main branch.  This avoids duplicated actions on PRs
+on:
+  pull_request:
+  push:
+    tags:
+      - "*"
+    branches:
+      - main
 jobs:
   pre-commit:
     name: Pre-commit checks
@@ -12,11 +18,35 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.7
-
+          cache: 'pip'
+          cache-dependency-path: 'pyproject.toml'
       - name: Install development requirements
         run: |
-          pip install .[dev]
+          pip install .[pre-commit]
 
       - name: Run pre-commit
         run: |
           pre-commit run --all-files || ( git status --short ; git diff ; exit 1 )
+  test:
+    name: Run tests
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ["3.7", "3.8", "3.9", "3.10"]
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+          cache-dependency-path: 'pyproject.toml'
+      - name: Install development requirements
+        run: |
+          pip install .[test]
+      - name: Run tests
+        run: |
+          cd test
+          pytest -v
