@@ -1,6 +1,5 @@
 import contextlib
 import glob
-import importlib.resources
 import os
 import pathlib
 import shutil
@@ -8,10 +7,10 @@ import tempfile
 import types
 import typing
 
+import importlib_resources  # Replace with importlib.resources once only Py3.9+ is supported
 import pkg_resources
+from importlib_resources.abc import Traversable
 
-# Replace with importlib.resources once only Py3.9+ is supported
-import importlib_resources
 
 __all__ = ["compile_proto_files"]
 
@@ -57,10 +56,11 @@ def _proto_directory(module: types.ModuleType) -> typing.Iterator[str]:
         print("#####", list(os.walk(tmp_dir)))
         yield tmp_dir
 
-def _recursive_copy(src_traversable, dest_path):
+
+def _recursive_copy(src_traversable: Traversable, dest_path: pathlib.Path) -> None:
     if src_traversable.is_dir():
         sub_dest_path = dest_path / src_traversable.name
-        for content in src_traversable.iterdir():
+        for content in src_traversable.iterdir():  # type: ignore
             _recursive_copy(content, sub_dest_path)
     else:
         assert src_traversable.is_file()
