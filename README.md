@@ -49,7 +49,7 @@ To manually enable the use of `ansys-tools-protoc-helper` in your project, the f
         )
         ```
 
-      The two commands which are overriden can also be specified individually. This may be useful in particular if you want to use the `setup.cfg` format:
+      The two commands which are overridden can also be specified individually. This may be useful in particular if you want to use the `setup.cfg` format:
 
         ```python
         from ansys.tools.protoc_helper import BuildPyCommand, DevelopCommand
