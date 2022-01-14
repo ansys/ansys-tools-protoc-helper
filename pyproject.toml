@@ -12,6 +12,7 @@ classifiers = ["License :: OSI Approved :: MIT License"]
 dynamic = ["version", "description"]
 requires-python = ">=3.7"
 dependencies = [
+    "setuptools>=42.0",
     "grpcio-tools==1.17.0",
     "protobuf==3.19.3",
     "mypy-protobuf==3.1.0",
@@ -19,7 +20,8 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-    "pre-commit",
+    "pytest~=6.0",
+    "pre-commit~=2.16.0",
     "mypy==0.931",
     "types-setuptools==57.4.7",
 ]
@@ -36,7 +38,7 @@ target-version = ['py37']
 
 [tool.mypy]
 python_version = 3.7
-# strict = true
+strict = true
 
 [[tool.mypy.overrides]]
 module = [
