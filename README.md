@@ -12,7 +12,7 @@ To manually enable the use of `ansys-tools-protoc-helper` in your project, the f
 
 - A ``pyproject.toml`` file with the following contents:
 
-    ```toml
+    ```
     [build-system]
     requires = ["setuptools>=42.0", "wheel", "ansys-tools-protoc-helper", <additional_dependencies>]
     build-backend = "setuptools.build_meta:__legacy__"
