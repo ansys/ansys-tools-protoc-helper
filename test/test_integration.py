@@ -40,7 +40,7 @@ def local_pkg_index(test_venv, tmpdir):
             str(test_venv.pip),
             "download",
             "-d",
-            pkg_idx_dir,
+            str(pkg_idx_dir),
         ]
         + extra_deps
     )
@@ -75,7 +75,7 @@ def create_test_pkg_wheel(local_pkg_index, test_venv):
                     "--no-index",
                     f"--find-links={local_pkg_index}",
                     "-w",
-                    f"{local_pkg_index}",
+                    str(local_pkg_index),
                     str(pkg_dir),
                 ]
             )
@@ -92,7 +92,7 @@ def install_test_pkg(local_pkg_index, test_venv):
                 "install",
                 "--no-index",
                 f"--find-links={local_pkg_index}",
-                f"{TEST_DATA_DIR / pkgname}",
+                str(TEST_DATA_DIR / pkgname),
             ]
         )
 
@@ -102,4 +102,13 @@ def install_test_pkg(local_pkg_index, test_venv):
 def test_dependency_compile(create_test_pkg_wheel, install_test_pkg, test_venv):
     create_test_pkg_wheel("testpkg-hello-protos")
     install_test_pkg("testpkg-greeter-protos")
-    subprocess.check_call([str(test_venv.python), "-c", "import testpkg.api.greeter.v0"])
+    subprocess.check_call(
+        [
+            str(test_venv.python),
+            "-c",
+            (
+                "from testpkg.api.greeter.v0 import greeter_pb2, greeter_pb2_grpc, "
+                + "greeter2_pb2, greeter2_pb2_grpc, greeter3_pb2, greeter3_pb2_grpc"
+            ),
+        ]
+    )

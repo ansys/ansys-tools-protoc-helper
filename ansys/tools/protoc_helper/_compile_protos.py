@@ -53,7 +53,6 @@ def _proto_directory(module: types.ModuleType) -> typing.Iterator[str]:
     with tempfile.TemporaryDirectory() as tmp_dir:
         relpath = pathlib.Path(tmp_dir, *(module.__name__.split(".")))
         _recursive_copy(importlib_resources.files(module), relpath.parent)
-        print("#####", list(os.walk(tmp_dir)))
         yield tmp_dir
 
 
