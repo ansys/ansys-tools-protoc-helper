@@ -36,6 +36,8 @@ To manually enable the use of `ansys-tools-protoc-helper` in your project, the f
         ```
       Note that ``*.proto`` is only needed if other packages should be able to depend on the ``*.proto`` files defined in your package.
 
+      The `py.typed` file is used to communicate that the package contains type information, see [PEP 561](https://www.python.org/dev/peps/pep-0561/). This file needs to be manually added.
+
     - If other projects should be able to depend on the ``.proto`` files contained in your project, an [entry point](https://packaging.python.org/en/latest/specifications/entry-points/) needs to be defined declaring the presence of the ``*.proto`` files:
         ```python
         entry_points={
