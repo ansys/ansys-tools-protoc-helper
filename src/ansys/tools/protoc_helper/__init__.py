@@ -1,3 +1,5 @@
+"""A utility for compiling '.proto' files to Python source."""
+
 __version__ = "0.0.0"
 
 from ._build_helper import *
