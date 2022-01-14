@@ -5,15 +5,19 @@ from ._build_helper import build_proto_py
 
 __all__ = ["BuildPyCommand", "DevelopCommand", "CMDCLASS_OVERRIDE"]
 
+
 class _CompileProtosMixin:
-    def run(self):
-        build_proto_py(self.distribution.package_dir[''])
-        super().run()
+    def run(self, *args, **kwargs):
+        build_proto_py(self.distribution.package_dir[""])
+        super().run(*args, **kwargs)
+
 
 class BuildPyCommand(_CompileProtosMixin, build_py):
     pass
 
+
 class DevelopCommand(_CompileProtosMixin, develop):
     pass
+
 
 CMDCLASS_OVERRIDE = {"build_py": BuildPyCommand, "develop": DevelopCommand}

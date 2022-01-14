@@ -1,27 +1,30 @@
-import os
 import glob
-import shutil
-import pathlib
-import tempfile
-import pkg_resources
 import importlib.resources
+import os
+import pathlib
+import shutil
+import tempfile
+
+import pkg_resources
 
 __all__ = ["build_proto_py"]
 
+
 def build_proto_py(dest_package):
     from grpc.tools import protoc
+
     command = [
         "grpc_tools.protoc",
         f"--python_out={dest_package}",
         f"--grpc_python_out={dest_package}",
         f"--mypy_out={dest_package}",
         f"--mypy_grpc_out={dest_package}",
-        f"--proto_path={dest_package}"
+        f"--proto_path={dest_package}",
     ]
     with tempfile.TemporaryDirectory() as tmp_dir:
         for entry_point in pkg_resources.iter_entry_points("pyansys_protoc_helper.proto_provider"):
             module = entry_point.load()
-            relpath = pathlib.Path(tmp_dir, *(module.__name__.split('.')))
+            relpath = pathlib.Path(tmp_dir, *(module.__name__.split(".")))
             relpath.mkdir(exist_ok=True, parents=True)
             # TODO: handle nested paths
             for filename in importlib.resources.contents(module):
@@ -34,8 +37,6 @@ def build_proto_py(dest_package):
         target_protos = glob.glob(os.path.join(dest_package, "**/*.proto"), recursive=True)
         command += target_protos
 
-        exit_code = protoc.main(
-            command
-        )
+        exit_code = protoc.main(command)
         if exit_code != 0:
             raise RuntimeError(f"Proto file compilation failed, command '{' '.join(command)}'.")
