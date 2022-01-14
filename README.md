@@ -38,6 +38,28 @@ To manually enable the use of `ansys-tools-protoc-helper` in your project, the f
 
       The `py.typed` file is used to communicate that the package contains type information, see [PEP 561](https://www.python.org/dev/peps/pep-0561/). This file needs to be manually added.
 
+    - The `cmdclass` is used to specify that some `setuptools` commands should be executed by `ansys-tools-protoc-helper`:
+
+        ```python
+        from ansys.tools.protoc_helper import CMDCLASS_OVERRIDE
+
+        setup(
+            <...>,
+            cmdclass=CMDCLASS_OVERRIDE
+        )
+        ```
+
+      The two commands which are overriden can also be specified individually. This may be useful in particular if you want to use the `setup.cfg` format:
+
+        ```python
+        from ansys.tools.protoc_helper import BuildPyCommand, DevelopCommand
+
+        setup(
+            <...>,
+            cmdclass={"build_py": BuildPyCommand, "develop": DevelopCommand}
+        )
+        ```
+
     - If other projects should be able to depend on the ``.proto`` files contained in your project, an [entry point](https://packaging.python.org/en/latest/specifications/entry-points/) needs to be defined declaring the presence of the ``*.proto`` files:
         ```python
         entry_points={
