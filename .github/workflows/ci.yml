@@ -1,0 +1,22 @@
+# check spelling, codestyle
+name: GitHub CI
+on: [push, pull_request]
+jobs:
+  pre-commit:
+    name: Pre-commit checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+
+      - name: Install development requirements
+        run: |
+          pip install .[dev]
+
+      - name: Run pre-commit
+        run: |
+          pre-commit run --all-files || ( git status --short ; git diff ; exit 1 )
