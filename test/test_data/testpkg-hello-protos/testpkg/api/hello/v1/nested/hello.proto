@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package testpkg.api.hello.v1.nested.hello;
+
+message Hello {
+    string content = 1;
+}

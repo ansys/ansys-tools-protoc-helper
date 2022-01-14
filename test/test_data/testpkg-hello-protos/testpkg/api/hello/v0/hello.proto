@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+package testpkg.api.hello.v0.hello;
+
 message Hello {
     string content = 1;
 }
