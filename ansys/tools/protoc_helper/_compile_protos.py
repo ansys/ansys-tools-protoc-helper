@@ -9,6 +9,7 @@ import typing
 
 import importlib_resources  # Replace with importlib.resources once only Py3.9+ is supported
 import pkg_resources
+from grpc.tools import protoc
 from importlib_resources.abc import Traversable
 
 
@@ -28,8 +29,6 @@ def compile_proto_files(target_package: str) -> None:
     target_package :
         Path of the package whose ``.proto`` files should be compiled.
     """
-    from grpc.tools import protoc
-
     command = [
         "grpc_tools.protoc",
         f"--python_out={target_package}",
