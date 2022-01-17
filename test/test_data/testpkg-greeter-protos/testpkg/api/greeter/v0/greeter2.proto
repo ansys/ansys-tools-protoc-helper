@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package testpkg.api.greeter.v0.greeter2;
+
+import "testpkg/api/hello/v1/nested/hello.proto";
+
+service Greeter2 {
+    rpc SayHello(testpkg.api.hello.v1.nested.hello.Hello) returns (testpkg.api.hello.v1.nested.hello.Hello);
+}

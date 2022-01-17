@@ -20,7 +20,11 @@ __all__ = ["BuildPyCommand", "DevelopCommand", "CMDCLASS_OVERRIDE"]
 
 class _CompileProtosMixin:
     def run(self):
-        compile_proto_files(self.distribution.package_dir[""])
+        try:
+            target_dir = self.distribution.package_dir[""]
+        except (KeyError, TypeError):
+            target_dir = "."
+        compile_proto_files(target_dir)
         super().run()
 
 

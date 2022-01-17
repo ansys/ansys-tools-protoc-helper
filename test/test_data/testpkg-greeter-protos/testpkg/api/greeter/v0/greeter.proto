@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package testpkg.api.greeter.v0.greeter;
+
+import "testpkg/api/hello/v0/hello.proto";
+
+service Greeter {
+    rpc SayHello(testpkg.api.hello.v0.hello.Hello) returns (testpkg.api.hello.v0.hello.Hello);
+}

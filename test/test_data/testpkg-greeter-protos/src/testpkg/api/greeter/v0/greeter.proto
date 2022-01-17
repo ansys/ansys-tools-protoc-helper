@@ -1,7 +1,0 @@
-syntax = "proto3";
-
-import "testpkg/api/hello/v0/hello.proto";
-
-service Greeter {
-    rpc SayHello(Hello) returns (Hello);
-}

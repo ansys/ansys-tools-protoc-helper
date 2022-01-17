@@ -1,6 +1,5 @@
 import contextlib
 import glob
-import importlib.resources
 import os
 import pathlib
 import shutil
@@ -8,7 +7,10 @@ import tempfile
 import types
 import typing
 
+import importlib_resources  # Replace with importlib.resources once only Py3.9+ is supported
 import pkg_resources
+from importlib_resources.abc import Traversable
+
 
 __all__ = ["compile_proto_files"]
 
@@ -50,10 +52,19 @@ def _dependency_modules() -> typing.Iterator[types.ModuleType]:
 def _proto_directory(module: types.ModuleType) -> typing.Iterator[str]:
     with tempfile.TemporaryDirectory() as tmp_dir:
         relpath = pathlib.Path(tmp_dir, *(module.__name__.split(".")))
-        for filename in importlib.resources.contents(module):
-            if filename.endswith(".proto"):
-                with importlib.resources.path(module, filename) as src_path:
-                    dest_path = relpath / filename
-                    os.makedirs(dest_path.parent, exist_ok=True)
-                    shutil.copyfile(src_path, relpath / filename)
+        _recursive_copy(importlib_resources.files(module), relpath.parent)
         yield tmp_dir
+
+
+def _recursive_copy(src_traversable: Traversable, dest_path: pathlib.Path) -> None:
+    if src_traversable.is_dir():
+        sub_dest_path = dest_path / src_traversable.name
+        for content in src_traversable.iterdir():  # type: ignore
+            _recursive_copy(content, sub_dest_path)
+    else:
+        assert src_traversable.is_file()
+        filename = src_traversable.name
+        if filename.endswith(".proto"):
+            os.makedirs(dest_path, exist_ok=True)
+            with importlib_resources.as_file(src_traversable) as src_path:
+                shutil.copyfile(src_path, dest_path / filename)
