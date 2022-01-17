@@ -39,6 +39,9 @@ name = "ansys.tools.protoc_helper"
 line-length = 100
 target-version = ['py37']
 
+[tool.pydocstyle]
+convention = "numpy"
+
 [tool.mypy]
 python_version = 3.7
 strict = true

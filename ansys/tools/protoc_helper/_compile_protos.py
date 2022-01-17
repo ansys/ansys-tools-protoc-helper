@@ -16,6 +16,18 @@ __all__ = ["compile_proto_files"]
 
 
 def compile_proto_files(target_package: str) -> None:
+    """Compile .proto files in a package to Python source.
+
+    Creates Python files and ``.pyi`` type stubs from the ``.proto`` files
+    in the ``target_package``. Proto files from all installed packages
+    defining the ``ansys.tools.protoc_helper.proto_provider`` entry point
+    are included as possible dependencies.
+
+    Parameters
+    ----------
+    target_package :
+        Path of the package whose ``.proto`` files should be compiled.
+    """
     from grpc.tools import protoc
 
     command = [
@@ -40,6 +52,7 @@ def compile_proto_files(target_package: str) -> None:
 
 
 def _dependency_modules() -> typing.Iterator[types.ModuleType]:
+    """Yield all modules that provide ``.proto`` files."""
     yield from (
         entry_point.load()
         for entry_point in pkg_resources.iter_entry_points(
@@ -50,6 +63,7 @@ def _dependency_modules() -> typing.Iterator[types.ModuleType]:
 
 @contextlib.contextmanager
 def _proto_directory(module: types.ModuleType) -> typing.Iterator[str]:
+    """Copy the ``.proto`` files from a module into a temporary directory."""
     with tempfile.TemporaryDirectory() as tmp_dir:
         relpath = pathlib.Path(tmp_dir, *(module.__name__.split(".")))
         _recursive_copy(importlib_resources.files(module), relpath.parent)
@@ -57,6 +71,7 @@ def _proto_directory(module: types.ModuleType) -> typing.Iterator[str]:
 
 
 def _recursive_copy(src_traversable: Traversable, dest_path: pathlib.Path) -> None:
+    """Copy ``.proto`` files contained in a ``Traversable`` to a given location."""
     if src_traversable.is_dir():
         sub_dest_path = dest_path / src_traversable.name
         for content in src_traversable.iterdir():  # type: ignore
