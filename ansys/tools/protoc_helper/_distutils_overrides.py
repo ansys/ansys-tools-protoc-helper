@@ -4,7 +4,7 @@
 # 'distutils.core.Command', but mypy *also* doesn't recognize that
 # this class has a 'distribution' attribute. Overall, it's not worth
 # the extra overhead.
-"""Defines setuptools commands to execute the proto compilation
+"""Defines setuptools commands to execute the proto compilation.
 
 Define commands which can be used in the setuptools ``cmdclass``
 directive to override the default behavior, and compile the .proto
@@ -19,6 +19,8 @@ __all__ = ["BuildPyCommand", "DevelopCommand", "CMDCLASS_OVERRIDE"]
 
 
 class _CompileProtosMixin:
+    """Mixin class which adds .proto compilation to a command."""
+
     def run(self):
         try:
             target_dir = self.distribution.package_dir[""]
@@ -29,11 +31,19 @@ class _CompileProtosMixin:
 
 
 class BuildPyCommand(_CompileProtosMixin, build_py):
-    pass
+    """Command to compile .proto files while building the package wheel.
+
+    Override for the ``build_py`` command which adds compilation of
+    .proto files to Python source.
+    """
 
 
 class DevelopCommand(_CompileProtosMixin, develop):
-    pass
+    """Command to compile .proto files during editable installs.
+
+    Override for the ``develop`` command which adds compilation of
+    .proto files to Python source.
+    """
 
 
 CMDCLASS_OVERRIDE = {"build_py": BuildPyCommand, "develop": DevelopCommand}

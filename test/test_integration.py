@@ -15,6 +15,7 @@ from conftest import TEST_DATA_DIR
 
 @pytest.fixture
 def test_venv(tmpdir):
+    """Create a temporary virtual environment for the test."""
     venv_dir = tmpdir / "venv"
     venv.main([str(venv_dir)])
     if os.name == "nt":  # Windows
@@ -33,6 +34,7 @@ def test_venv(tmpdir):
 
 @pytest.fixture
 def local_pkg_index(test_venv, tmpdir):
+    """Create a temporary local directory to use as a package index."""
     pkg_idx_dir = tmpdir / "pkg_idx"
     extra_deps = ["wheel"]
     subprocess.check_call(
@@ -58,6 +60,12 @@ def local_pkg_index(test_venv, tmpdir):
 
 @contextlib.contextmanager
 def copy_test_package(pkgname):
+    """Copy the test package to a temporary location.
+
+    This is done to avoid changes in the test package (such as the
+    creation of Python files) caused by building their wheels to
+    propagate to subsequent test runs.
+    """
     with tempfile.TemporaryDirectory() as tmp_dir:
         dest_dir = pathlib.Path(tmp_dir) / pkgname
         shutil.copytree(TEST_DATA_DIR / pkgname, dest_dir)
@@ -66,6 +74,8 @@ def copy_test_package(pkgname):
 
 @pytest.fixture
 def create_test_pkg_wheel(local_pkg_index, test_venv):
+    """Create the wheel for a test package, and store it at the local package index."""
+
     def inner(pkgname):
         with copy_test_package(pkgname) as pkg_dir:
             subprocess.check_call(
@@ -85,6 +95,8 @@ def create_test_pkg_wheel(local_pkg_index, test_venv):
 
 @pytest.fixture
 def install_test_pkg(local_pkg_index, test_venv):
+    """Install a test package into the temporary test venv."""
+
     def inner(pkgname):
         subprocess.check_call(
             [
@@ -100,6 +112,7 @@ def install_test_pkg(local_pkg_index, test_venv):
 
 
 def test_dependency_compile(create_test_pkg_wheel, install_test_pkg, test_venv):
+    """Test installation of the ``testpkg-greeter-protos`` package."""
     create_test_pkg_wheel("testpkg-hello-protos")
     install_test_pkg("testpkg-greeter-protos")
     subprocess.check_call(
