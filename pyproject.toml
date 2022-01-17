@@ -6,7 +6,7 @@ build-backend = "flit_core.buildapi"
 name = "ansys-tools-protoc-helper"
 authors = [{name = "ANSYS, Inc."}]
 maintainers = [{name = "PyAnsys developers", "email" = "pyansys.support@ansys.com"}]
-readme = "README.md"
+readme = "README.rst"
 license = {file = "LICENSE"}
 classifiers = ["License :: OSI Approved :: MIT License"]
 dynamic = ["version", "description"]
@@ -27,6 +27,12 @@ pre-commit = [
 ]
 test = [
     "pytest~=6.0",
+]
+doc = [
+    "sphinx",
+    "numpydoc",
+    "pyansys-sphinx-theme",
+    "sphinx-copybutton",
 ]
 
 [project.urls]

@@ -1,3 +1,0 @@
-# protobuf compilation helper
-
-TODO
