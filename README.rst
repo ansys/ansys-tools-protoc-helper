@@ -32,7 +32,7 @@ To manually enable the use of ``ansys-tools-protoc-helper`` in your project, the
 
             install_requires=[grpcio, protobuf, <additional_dependencies>],
 
-        Refer to the :ref:`grpc_versioning_strategy` section for details on which ``grpc`` and ``protobuf`` versions can be used.
+        Refer to the `gRPC version strategy`_ section for details on which ``grpc`` and ``protobuf`` versions can be used.
 
     -   The ``package_data`` declares additional file names which are included in the package:
 
@@ -81,8 +81,6 @@ To manually enable the use of ``ansys-tools-protoc-helper`` in your project, the
         where ``<your.package.name>`` is the _importable_ name of your package. In other words, ``import <your.package.name>`` should work after installing the package.
 
 For a complete example, see the ``test/test_data/testpkg-greeter-protos`` package.
-
-.. _grpc_versioning_strategy:
 
 gRPC version strategy
 ~~~~~~~~~~~~~~~~~~~~~
