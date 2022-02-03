@@ -1,9 +1,14 @@
 name: Upload Python Package
 
-on: [release]
+on:
+  push:
+    # Push events to every tag including hierarchical tags like v1.0/beta
+    tags:
+      - '**'
 
 jobs:
   deploy:
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
     runs-on: ubuntu-20.04
 
     steps:
