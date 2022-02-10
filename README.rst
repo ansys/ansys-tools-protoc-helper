@@ -80,6 +80,16 @@ To manually enable the use of ``ansys-tools-protoc-helper`` in your project, the
 
         where ``<your.package.name>`` is the _importable_ name of your package. In other words, ``import <your.package.name>`` should work after installing the package.
 
+        By default, the the ``.proto`` files will be copied to ``your/package/name``. If a different location should be used, append a semicolon to the entry point name, followed by the dot-separated target location:
+
+        .. code:: python
+
+            entry_points={
+                "ansys.tools.protoc_helper.proto_provider": {
+                    "<your.package.name>:<target.location>=<your.package.name>"
+                },
+            },
+
 For a complete example, see the ``test/test_data/testpkg-greeter-protos`` package.
 
 gRPC version strategy
