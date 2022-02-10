@@ -38,6 +38,9 @@ doc = [
 [project.urls]
 Source = "https://github.com/ansys/ansys-tools-protoc-helper"
 
+[project.entry-points."ansys.tools.protoc_helper.proto_provider"]
+"google.base_protos:" = "grpc_tools._proto"
+
 [tool.flit.module]
 name = "ansys.tools.protoc_helper"
 
