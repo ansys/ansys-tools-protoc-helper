@@ -7,7 +7,7 @@ A utility to compile ``.proto`` files to Python source when building the package
 Quickstart
 ~~~~~~~~~~
 
-The simplest way to get started is using the `template repository <TODO: link to template>`_.
+The simplest way to get started is using the `template repository <https://github.com/ansys/ansys-api-template>`_.
 
 Manual use
 ~~~~~~~~~~
