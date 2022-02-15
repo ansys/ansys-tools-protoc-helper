@@ -7,6 +7,7 @@ on:
       - "*"
     branches:
       - main
+
 jobs:
   pre-commit:
     name: Pre-commit checks
@@ -63,6 +64,7 @@ jobs:
       - name: Build HTML
         run: |
           make -C doc html SPHINXOPTS="-W"
+          touch doc/build/html/.nojekyll
 
       - name: Build PDF Documentation
         run: |
@@ -83,3 +85,44 @@ jobs:
           name: Documentation-pdf
           path: doc/build/latex/*.pdf
           retention-days: 7
+
+      - name: Deploy docs
+        if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: doc/build/html
+
+  deploy:
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
+    needs: [docs, test]
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+    - uses: actions/download-artifact@v2
+
+    - name: Display structure of downloaded files
+      run: ls -R
+
+    - name: Build
+      run: |
+        pip install build
+        python -m build
+
+    - name: Upload to Public PyPi
+      run: |
+        pip install twine
+        twine upload --skip-existing dist/*
+      env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      with:
+        generate_release_notes: true
+        files: |
+          ./**/*.whl
+          ./**/*.pdf
