@@ -1,11 +1,10 @@
-import contextlib
+import filecmp
 import glob
 import os
 import pathlib
 import shutil
 import tempfile
-import types
-import typing
+import warnings
 
 import importlib_resources  # Replace with importlib.resources once only Py3.9+ is supported
 import pkg_resources
@@ -37,10 +36,19 @@ def compile_proto_files(target_package: str) -> None:
         f"--mypy_grpc_out={target_package}",
         f"--proto_path={target_package}",
     ]
-    with contextlib.ExitStack() as exit_stack:
-        for module in _dependency_modules():
-            module_proto_dir = exit_stack.enter_context(_proto_directory(module))
-            command.append(f"--proto_path={module_proto_dir}")
+    with tempfile.TemporaryDirectory() as proto_include_dir:
+        for entry_point in pkg_resources.iter_entry_points(
+            "ansys.tools.protoc_helper.proto_provider"
+        ):
+            module = entry_point.load()
+            if ":" in entry_point.name:
+                module_dest_name = entry_point.name.split(":", 1)[1]
+            else:
+                module_dest_name = module.__name__
+            relpath = pathlib.Path(proto_include_dir, *(module_dest_name.split(".")))
+            _recursive_copy(importlib_resources.files(module), relpath)
+
+        command.append(f"--proto_path={proto_include_dir}")
 
         target_protos = glob.glob(os.path.join(target_package, "**/*.proto"), recursive=True)
         command += target_protos
@@ -50,35 +58,22 @@ def compile_proto_files(target_package: str) -> None:
             raise RuntimeError(f"Proto file compilation failed, command '{' '.join(command)}'.")
 
 
-def _dependency_modules() -> typing.Iterator[types.ModuleType]:
-    """Yield all modules that provide ``.proto`` files."""
-    yield from (
-        entry_point.load()
-        for entry_point in pkg_resources.iter_entry_points(
-            "ansys.tools.protoc_helper.proto_provider"
-        )
-    )
-
-
-@contextlib.contextmanager
-def _proto_directory(module: types.ModuleType) -> typing.Iterator[str]:
-    """Copy the ``.proto`` files from a module into a temporary directory."""
-    with tempfile.TemporaryDirectory() as tmp_dir:
-        relpath = pathlib.Path(tmp_dir, *(module.__name__.split(".")))
-        _recursive_copy(importlib_resources.files(module), relpath.parent)
-        yield tmp_dir
-
-
 def _recursive_copy(src_traversable: Traversable, dest_path: pathlib.Path) -> None:
     """Copy ``.proto`` files contained in a ``Traversable`` to a given location."""
     if src_traversable.is_dir():
-        sub_dest_path = dest_path / src_traversable.name
         for content in src_traversable.iterdir():  # type: ignore
-            _recursive_copy(content, sub_dest_path)
+            _recursive_copy(content, dest_path / content.name)
     else:
         assert src_traversable.is_file()
         filename = src_traversable.name
         if filename.endswith(".proto"):
-            os.makedirs(dest_path, exist_ok=True)
+            os.makedirs(dest_path.parent, exist_ok=True)
             with importlib_resources.as_file(src_traversable) as src_path:
-                shutil.copyfile(src_path, dest_path / filename)
+                if dest_path.exists():
+                    if not filecmp.cmp(src_path, dest_path):
+                        warnings.warn(
+                            f"Duplicate, non-identical files '{dest_path}' found "
+                            "when collectiong .proto dependencies."
+                        )
+                else:
+                    shutil.copyfile(src_path, dest_path)
