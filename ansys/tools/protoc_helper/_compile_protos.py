@@ -52,7 +52,7 @@ def compile_proto_files(target_package: str) -> None:
 
         target_protos = glob.glob(os.path.join(target_package, "**/*.proto"), recursive=True)
         if not target_protos:
-            raise RuntimeError(
+            raise FileNotFoundError(
                 "No '.proto' files found in the target package directory "
                 f"'{os.path.abspath(target_package)}'."
             )
