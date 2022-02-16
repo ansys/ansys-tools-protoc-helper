@@ -51,6 +51,11 @@ def compile_proto_files(target_package: str) -> None:
         command.append(f"--proto_path={proto_include_dir}")
 
         target_protos = glob.glob(os.path.join(target_package, "**/*.proto"), recursive=True)
+        if not target_protos:
+            raise FileNotFoundError(
+                "No '.proto' files found in the target package directory "
+                f"'{os.path.abspath(target_package)}'."
+            )
         command += target_protos
 
         exit_code = protoc.main(command)
