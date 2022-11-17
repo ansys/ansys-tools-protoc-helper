@@ -66,7 +66,7 @@ def compile_proto_files(target_package: str) -> None:
 def _recursive_copy(src_traversable: Traversable, dest_path: pathlib.Path) -> None:
     """Copy ``.proto`` files contained in a ``Traversable`` to a given location."""
     if src_traversable.is_dir():
-        for content in src_traversable.iterdir():  # type: ignore
+        for content in src_traversable.iterdir():
             _recursive_copy(content, dest_path / content.name)
     else:
         assert src_traversable.is_file()
