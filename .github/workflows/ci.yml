@@ -7,6 +7,8 @@ on:
       - "*"
     branches:
       - main
+  workflow_dispatch:
+    inputs:
 
 jobs:
   pre-commit:
