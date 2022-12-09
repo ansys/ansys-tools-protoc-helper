@@ -104,11 +104,11 @@ For example, if ``ansys-tools-protoc-helper`` pins
 .. code::
 
     dependencies = [
-        "grpcio-tools==1.17.0",
+        "grpcio-tools==1.20.0",
         "protobuf==3.19.3",
     ]
 
-your own dependencies could be ``grpcio-tools~=1.17``, ``protobuf~=3.19`` (using the ``~=`` `compatible version operator <https://www.python.org/dev/peps/pep-0440/#compatible-release>`_).
+your own dependencies could be ``grpcio-tools~=1.20``, ``protobuf~=3.19`` (using the ``~=`` `compatible version operator <https://www.python.org/dev/peps/pep-0440/#compatible-release>`_).
 
 The versions pinned by ``ansys-tools-protoc-helper`` are chosen as follows:
 
