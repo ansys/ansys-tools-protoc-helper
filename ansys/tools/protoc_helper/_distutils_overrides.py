@@ -15,35 +15,59 @@ from setuptools.command.develop import develop
 
 from ._compile_protos import compile_proto_files
 
-__all__ = ["BuildPyCommand", "DevelopCommand", "CMDCLASS_OVERRIDE"]
+__all__ = ["CMDCLASS_OVERRIDE", "create_cmdclass_override"]
 
 
 class _CompileProtosMixin:
     """Mixin class which adds .proto compilation to a command."""
+
+    CUSTOM_PROTOS_DIR = None
 
     def run(self):
         try:
             target_dir = self.distribution.package_dir[""]
         except (KeyError, TypeError):
             target_dir = "."
-        compile_proto_files(target_dir)
+        try:
+            protos_directory = self.distribution.package_dir[self.CUSTOM_PROTOS_DIR]
+        except (KeyError, TypeError):
+            protos_directory = self.CUSTOM_PROTOS_DIR
+        compile_proto_files(target_dir, protos_directory=protos_directory)
         super().run()
 
 
-class BuildPyCommand(_CompileProtosMixin, build_py):
-    """Command to compile .proto files while building the package wheel.
+def create_cmdclass_override(protos_directory=None):
+    """Create the ``cmdclass`` options for compiling protobuf files.
 
-    Override for the ``build_py`` command which adds compilation of
-    .proto files to Python source.
+    Creates the override classes, to be passed as the ``cmdclass`` argument
+    to ``setuptools.setup``, for compiling ``.proto`` files during the
+    package build process.
+
+    Parameters
+    ----------
+    protos_directory :
+        Directory path containing the protobuf files, relative to the
+        package root. If unspecified, only protobuf files inside the
+        package source will be considered.
     """
 
+    class BuildPyCommand(_CompileProtosMixin, build_py):
+        """Command to compile .proto files while building the package wheel.
 
-class DevelopCommand(_CompileProtosMixin, develop):
-    """Command to compile .proto files during editable installs.
+        Override for the ``build_py`` command which adds compilation of
+        .proto files to Python source.
+        """
+        CUSTOM_PROTOS_DIR = protos_directory
 
-    Override for the ``develop`` command which adds compilation of
-    .proto files to Python source.
-    """
+    class DevelopCommand(_CompileProtosMixin, develop):
+        """Command to compile .proto files during editable installs.
+
+        Override for the ``develop`` command which adds compilation of
+        .proto files to Python source.
+        """
+        CUSTOM_PROTOS_DIR = protos_directory
+
+    return {"build_py": BuildPyCommand, "develop": DevelopCommand}
 
 
-CMDCLASS_OVERRIDE = {"build_py": BuildPyCommand, "develop": DevelopCommand}
+CMDCLASS_OVERRIDE = create_cmdclass_override()

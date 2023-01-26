@@ -113,6 +113,7 @@ def install_test_pkg(local_pkg_index, test_venv):
 
 def test_dependency_compile(create_test_pkg_wheel, install_test_pkg, test_venv):
     """Test installation of the ``testpkg-greeter-protos`` package."""
+    create_test_pkg_wheel("testpkg-hello2-protos")
     create_test_pkg_wheel("testpkg-hello-protos")
     install_test_pkg("testpkg-greeter-protos")
     subprocess.check_call(
@@ -122,6 +123,16 @@ def test_dependency_compile(create_test_pkg_wheel, install_test_pkg, test_venv):
             (
                 "from testpkg.api.greeter.v0 import greeter_pb2, greeter_pb2_grpc, "
                 + "greeter2_pb2, greeter2_pb2_grpc, greeter3_pb2, greeter3_pb2_grpc"
+            ),
+        ]
+    )
+    subprocess.check_call(
+        [
+            str(test_venv.python),
+            "-c",
+            (
+                "from testpkg.api.hello2 import hello_pb2, hello_pb2_grpc, "
+                + "hello_helper"
             ),
         ]
     )

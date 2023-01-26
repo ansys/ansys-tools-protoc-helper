@@ -5,6 +5,8 @@ import pathlib
 import shutil
 import tempfile
 import warnings
+from typing import Optional, List
+import logging
 
 import importlib_resources  # Replace with importlib.resources once only Py3.9+ is supported
 import pkg_resources
@@ -15,7 +17,8 @@ from importlib_resources.abc import Traversable
 __all__ = ["compile_proto_files"]
 
 
-def compile_proto_files(target_package: str) -> None:
+
+def compile_proto_files(target_package: str, protos_directory: Optional[str] = None) -> None:
     """Compile .proto files in a package to Python source.
 
     Creates Python files and ``.pyi`` type stubs from the ``.proto`` files
@@ -26,7 +29,13 @@ def compile_proto_files(target_package: str) -> None:
     Parameters
     ----------
     target_package :
-        Path of the package whose ``.proto`` files should be compiled.
+        Path of the target package in which the generated Python files should
+        be placed. If the ``target_package`` contains ``.proto`` files, they will
+        be compiled. Otherwise, ``protos_directory`` needs to be specified.
+    protos_directory :
+        If specified, ``.proto`` files from this directory will be compiled,
+        in addition to any ``.proto`` files that may already be in the
+        ``target_package``.
     """
     command = [
         "grpc_tools.protoc",
@@ -40,7 +49,10 @@ def compile_proto_files(target_package: str) -> None:
         for entry_point in pkg_resources.iter_entry_points(
             "ansys.tools.protoc_helper.proto_provider"
         ):
-            module = entry_point.load()
+            try:
+                module = entry_point.load()
+            except ImportError:
+                logging.warning(f"Cannot load proto files from entry point {entry_point.name}")
             if ":" in entry_point.name:
                 module_dest_name = entry_point.name.split(":", 1)[1]
             else:
@@ -49,6 +61,9 @@ def compile_proto_files(target_package: str) -> None:
             _recursive_copy(importlib_resources.files(module), relpath)
 
         command.append(f"--proto_path={proto_include_dir}")
+
+        if protos_directory is not None:
+            _recursive_copy(pathlib.Path(protos_directory), pathlib.Path(target_package))
 
         target_protos = glob.glob(os.path.join(target_package, "**/*.proto"), recursive=True)
         if not target_protos:
@@ -63,8 +78,11 @@ def compile_proto_files(target_package: str) -> None:
             raise RuntimeError(f"Proto file compilation failed, command '{' '.join(command)}'.")
 
 
-def _recursive_copy(src_traversable: Traversable, dest_path: pathlib.Path) -> None:
-    """Copy ``.proto`` files contained in a ``Traversable`` to a given location."""
+def _recursive_copy(src_traversable: Traversable, dest_path: pathlib.Path) -> List[pathlib.Path]:
+    """
+    Copy ``.proto`` files contained in a ``Traversable`` to a given location.
+    Returns the list of created file paths.
+    """
     if src_traversable.is_dir():
         for content in src_traversable.iterdir():
             _recursive_copy(content, dest_path / content.name)
