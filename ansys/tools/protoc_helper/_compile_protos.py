@@ -58,12 +58,16 @@ def compile_proto_files(target_package: str, protos_directory: Optional[str] = N
             else:
                 module_dest_name = module.__name__
             relpath = pathlib.Path(proto_include_dir, *(module_dest_name.split(".")))
-            _recursive_copy(importlib_resources.files(module), relpath)
+            _recursive_copy(importlib_resources.files(module), relpath, relpath)
 
         command.append(f"--proto_path={proto_include_dir}")
 
         if protos_directory is not None:
-            _recursive_copy(pathlib.Path(protos_directory), pathlib.Path(target_package))
+            _recursive_copy(
+                pathlib.Path(protos_directory),
+                pathlib.Path(target_package),
+                pathlib.Path(target_package),
+            )
 
         target_protos = glob.glob(os.path.join(target_package, "**/*.proto"), recursive=True)
         if not target_protos:
@@ -79,12 +83,22 @@ def compile_proto_files(target_package: str, protos_directory: Optional[str] = N
 
 
 def _recursive_copy(
-    src_traversable: Union[Traversable, pathlib.Path], dest_path: pathlib.Path
+    src_traversable: Union[Traversable, pathlib.Path],
+    dest_path: pathlib.Path,
+    root_dest_path: pathlib.Path,
 ) -> None:
     """Copy ``.proto`` files contained in a ``Traversable`` to a given location."""
+    if isinstance(src_traversable, pathlib.Path):
+        if root_dest_path in src_traversable.parents:
+            logging.info(
+                f"Skipping {src_traversable}, which is a subdirectory of "
+                f"the target {root_dest_path}."
+            )
+            return
+
     if src_traversable.is_dir():
         for content in src_traversable.iterdir():
-            _recursive_copy(content, dest_path / content.name)
+            _recursive_copy(content, dest_path / content.name, root_dest_path)
     else:
         assert src_traversable.is_file()
         filename = src_traversable.name
