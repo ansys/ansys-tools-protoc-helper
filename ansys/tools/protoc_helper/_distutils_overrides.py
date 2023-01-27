@@ -57,6 +57,7 @@ def create_cmdclass_override(protos_directory=None):
         Override for the ``build_py`` command which adds compilation of
         .proto files to Python source.
         """
+
         CUSTOM_PROTOS_DIR = protos_directory
 
     class DevelopCommand(_CompileProtosMixin, develop):
@@ -65,6 +66,7 @@ def create_cmdclass_override(protos_directory=None):
         Override for the ``develop`` command which adds compilation of
         .proto files to Python source.
         """
+
         CUSTOM_PROTOS_DIR = protos_directory
 
     return {"build_py": BuildPyCommand, "develop": DevelopCommand}

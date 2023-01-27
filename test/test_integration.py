@@ -130,9 +130,6 @@ def test_dependency_compile(create_test_pkg_wheel, install_test_pkg, test_venv):
         [
             str(test_venv.python),
             "-c",
-            (
-                "from testpkg.api.hello2 import hello_pb2, hello_pb2_grpc, "
-                + "hello_helper"
-            ),
+            ("from testpkg.api.hello2 import hello_pb2, hello_pb2_grpc, " + "hello_helper"),
         ]
     )

@@ -9,7 +9,7 @@ if __name__ == "__main__":
         author="ANSYS, Inc.",
         python_requires=">=3.7",
         install_requires=["grpcio~=1.0", "protobuf~=3.0"],
-        package_dir = {"": "src"},
+        package_dir={"": "src"},
         packages=setuptools.find_namespace_packages("src", include=("testpkg.*",)),
         package_data={
             "": ["*.proto", "*.pyi", "py.typed"],

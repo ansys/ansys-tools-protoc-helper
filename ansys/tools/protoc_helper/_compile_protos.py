@@ -1,12 +1,13 @@
 import filecmp
 import glob
+import logging
 import os
 import pathlib
 import shutil
 import tempfile
 import warnings
-from typing import Optional, List
-import logging
+from typing import Optional
+from typing import Union
 
 import importlib_resources  # Replace with importlib.resources once only Py3.9+ is supported
 import pkg_resources
@@ -15,7 +16,6 @@ from importlib_resources.abc import Traversable
 
 
 __all__ = ["compile_proto_files"]
-
 
 
 def compile_proto_files(target_package: str, protos_directory: Optional[str] = None) -> None:
@@ -78,11 +78,10 @@ def compile_proto_files(target_package: str, protos_directory: Optional[str] = N
             raise RuntimeError(f"Proto file compilation failed, command '{' '.join(command)}'.")
 
 
-def _recursive_copy(src_traversable: Traversable, dest_path: pathlib.Path) -> List[pathlib.Path]:
-    """
-    Copy ``.proto`` files contained in a ``Traversable`` to a given location.
-    Returns the list of created file paths.
-    """
+def _recursive_copy(
+    src_traversable: Union[Traversable, pathlib.Path], dest_path: pathlib.Path
+) -> None:
+    """Copy ``.proto`` files contained in a ``Traversable`` to a given location."""
     if src_traversable.is_dir():
         for content in src_traversable.iterdir():
             _recursive_copy(content, dest_path / content.name)
