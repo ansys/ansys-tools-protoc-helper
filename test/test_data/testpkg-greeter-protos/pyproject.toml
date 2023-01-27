@@ -1,3 +1,3 @@
 [build-system]
-requires = ["setuptools>=42.0", "wheel", "ansys-tools-protoc-helper", "testpkg-hello-protos"]
+requires = ["setuptools>=42.0", "wheel", "ansys-tools-protoc-helper", "testpkg-hello-protos", "testpkg-hello2-protos", "testpkg-hello3-protos"]
 build-backend = "setuptools.build_meta:__legacy__"

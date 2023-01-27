@@ -113,8 +113,9 @@ def install_test_pkg(local_pkg_index, test_venv):
 
 def test_dependency_compile(create_test_pkg_wheel, install_test_pkg, test_venv):
     """Test installation of the ``testpkg-greeter-protos`` package."""
-    create_test_pkg_wheel("testpkg-hello2-protos")
     create_test_pkg_wheel("testpkg-hello-protos")
+    create_test_pkg_wheel("testpkg-hello2-protos")
+    create_test_pkg_wheel("testpkg-hello3-protos")
     install_test_pkg("testpkg-greeter-protos")
     subprocess.check_call(
         [
@@ -126,10 +127,12 @@ def test_dependency_compile(create_test_pkg_wheel, install_test_pkg, test_venv):
             ),
         ]
     )
-    subprocess.check_call(
-        [
-            str(test_venv.python),
-            "-c",
-            "from testpkg.api.hello2 import hello_pb2, hello_pb2_grpc, hello_helper",
-        ]
-    )
+    # Test alternative package layouts
+    for pkg_name in ["hello2", "hello3"]:
+        subprocess.check_call(
+            [
+                str(test_venv.python),
+                "-c",
+                f"from testpkg.api.{pkg_name} import hello_pb2, hello_pb2_grpc, hello_helper",
+            ]
+        )

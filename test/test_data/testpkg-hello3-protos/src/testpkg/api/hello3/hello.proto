@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package testpkg.api.hello2.hello;
+package testpkg.api.hello3.hello;
 
 message Hello {
     string content = 1;

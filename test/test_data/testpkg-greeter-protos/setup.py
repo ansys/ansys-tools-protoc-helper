@@ -13,6 +13,7 @@ if __name__ == "__main__":
             "protobuf~=3.0",
             "testpkg-hello-protos",
             "testpkg-hello2-protos",
+            "testpkg-hello3-protos",
         ],
         packages=setuptools.find_namespace_packages(".", include=("testpkg.*",)),
         package_data={

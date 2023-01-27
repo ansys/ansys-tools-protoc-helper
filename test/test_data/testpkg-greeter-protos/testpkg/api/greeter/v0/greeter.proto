@@ -3,7 +3,11 @@ syntax = "proto3";
 package testpkg.api.greeter.v0.greeter;
 
 import "testpkg/api/hello/v0/hello.proto";
+import "testpkg/api/hello2/hello.proto";
+import "testpkg/api/hello3/hello.proto";
 
 service Greeter {
     rpc SayHello(testpkg.api.hello.v0.hello.Hello) returns (testpkg.api.hello.v0.hello.Hello);
+    rpc SayHello2(testpkg.api.hello2.hello.Hello) returns (testpkg.api.hello2.hello.Hello);
+    rpc SayHello3(testpkg.api.hello3.hello.Hello) returns (testpkg.api.hello3.hello.Hello);
 }
