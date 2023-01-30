@@ -6,7 +6,7 @@ import pathlib
 import shutil
 import tempfile
 import warnings
-from typing import Optional
+from typing import Iterable
 from typing import Union
 
 import importlib_resources  # Replace with importlib.resources once only Py3.9+ is supported
@@ -18,7 +18,7 @@ from importlib_resources.abc import Traversable
 __all__ = ["compile_proto_files"]
 
 
-def compile_proto_files(target_package: str, protos_directory: Optional[str] = None) -> None:
+def compile_proto_files(target_package: str, proto_directories: Iterable[str] = tuple()) -> None:
     """Compile .proto files in a package to Python source.
 
     Creates Python files and ``.pyi`` type stubs from the ``.proto`` files
@@ -31,9 +31,10 @@ def compile_proto_files(target_package: str, protos_directory: Optional[str] = N
     target_package :
         Path of the target package in which the generated Python files should
         be placed. If the ``target_package`` contains ``.proto`` files, they will
-        be compiled. Otherwise, ``protos_directory`` needs to be specified.
-    protos_directory :
-        If specified, ``.proto`` files from this directory will be compiled,
+        be compiled. Otherwise, at least one directory needs to be specified in
+        ``proto_directories``.
+    proto_directories :
+        If specified, ``.proto`` files from these directories will be compiled,
         in addition to any ``.proto`` files that may already be in the
         ``target_package``.
     """
@@ -62,9 +63,9 @@ def compile_proto_files(target_package: str, protos_directory: Optional[str] = N
 
         command.append(f"--proto_path={proto_include_dir}")
 
-        if protos_directory is not None:
+        for proto_dir in proto_directories:
             _recursive_copy(
-                pathlib.Path(protos_directory),
+                pathlib.Path(proto_dir),
                 pathlib.Path(target_package),
                 pathlib.Path(target_package),
             )

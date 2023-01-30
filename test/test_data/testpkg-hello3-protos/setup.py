@@ -17,5 +17,5 @@ if __name__ == "__main__":
         entry_points={
             "ansys.tools.protoc_helper.proto_provider": {"testpkg.api.hello3=testpkg.api.hello3"},
         },
-        cmdclass=create_cmdclass_override(protos_directory="src"),
+        cmdclass=create_cmdclass_override(proto_directories=["src"]),
     )
