@@ -2,7 +2,6 @@ import setuptools
 
 from ansys.tools.protoc_helper import CMDCLASS_OVERRIDE
 
-
 if __name__ == "__main__":
     setuptools.setup(
         name="testpkg-hello-protos",
