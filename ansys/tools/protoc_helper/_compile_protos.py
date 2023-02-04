@@ -6,11 +6,10 @@ import shutil
 import tempfile
 import warnings
 
-import importlib_resources  # Replace with importlib.resources once only Py3.9+ is supported
-import pkg_resources
 from grpc.tools import protoc
+import importlib_resources  # Replace with importlib.resources once only Py3.9+ is supported
 from importlib_resources.abc import Traversable
-
+import pkg_resources
 
 __all__ = ["compile_proto_files"]
 

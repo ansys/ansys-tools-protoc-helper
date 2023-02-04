@@ -9,8 +9,8 @@ import types
 import venv
 
 import pytest
-from conftest import PKG_ROOT_DIR
-from conftest import TEST_DATA_DIR
+
+from conftest import PKG_ROOT_DIR, TEST_DATA_DIR
 
 
 @pytest.fixture
