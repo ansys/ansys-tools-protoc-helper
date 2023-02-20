@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>protobuf compilation helper &#8212; ansys-tools-protoc-helper 0.2.0 documentation</title>
+    <title>protobuf compilation helper &#8212; ansys-tools-protoc-helper 0.3.0 documentation</title>
     
     
   <!-- Loaded before other Sphinx assets -->
@@ -185,6 +185,13 @@
   <a class="reference internal nav-link" href="#grpc-version-strategy">
    gRPC version strategy
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#upgrade-plans">
+     Upgrade plans
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -297,13 +304,70 @@
 </pre></div>
 </div>
 <p>your own dependencies could be <code class="docutils literal notranslate"><span class="pre">grpcio-tools~=1.20</span></code>, <code class="docutils literal notranslate"><span class="pre">protobuf~=3.19</span></code> (using the <code class="docutils literal notranslate"><span class="pre">~=</span></code> <a class="reference external" href="https://www.python.org/dev/peps/pep-0440/#compatible-release">compatible version operator</a>).</p>
-<p>The versions pinned by <code class="docutils literal notranslate"><span class="pre">ansys-tools-protoc-helper</span></code> are chosen as follows:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">protoc</span></code> compiler version used is determined by the <code class="docutils literal notranslate"><span class="pre">grpcio-tools</span></code> package, <em>not</em> the <code class="docutils literal notranslate"><span class="pre">protobuf</span></code> dependency. The <code class="docutils literal notranslate"><span class="pre">grpcio-tools==1.20.0</span></code> uses <code class="docutils literal notranslate"><span class="pre">protoc==3.7.0</span></code>.</p>
+</div>
+<p>The versions pinned by <code class="docutils literal notranslate"><span class="pre">ansys-tools-protoc-helper</span></code> were originally chosen as follows:</p>
 <ul class="simple">
 <li><p>The first version of <code class="docutils literal notranslate"><span class="pre">grpcio-tools</span></code> for which binary wheels are available on PyPI, for at least one of the Python versions we support.</p></li>
 <li><p>The first version of <code class="docutils literal notranslate"><span class="pre">protobuf</span></code> which is compatible with <code class="docutils literal notranslate"><span class="pre">mypy-protobuf</span></code>, for generating type stubs.</p></li>
 </ul>
+<section id="upgrade-plans">
+<h3>Upgrade plans<a class="headerlink" href="#upgrade-plans" title="Permalink to this headline">#</a></h3>
+<p>The current plan for upgrading <code class="docutils literal notranslate"><span class="pre">grpcio-tools</span></code> and <code class="docutils literal notranslate"><span class="pre">protobuf</span></code> is as follows:</p>
+<table class="table">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 13%" />
+<col style="width: 21%" />
+<col style="width: 18%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><code class="docutils literal notranslate"><span class="pre">ansys-tools-protoc-helper</span></code> version</p></th>
+<th class="head"><p>release date</p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">grpcio-tools</span></code> version</p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">protobuf</span></code> version</p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">protoc</span></code> version</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">0.2.x</span></code></p></td>
+<td><p>2022-12-09</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1.20.x</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">3.19.3</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">3.7.x</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">0.3.x</span></code></p></td>
+<td><p>2023-02-20</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1.25.x</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">3.19.3</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">3.8.x</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">0.4.x</span></code></p></td>
+<td><p>ETA 2023-02-20</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1.44.x</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">3.19.3</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">3.19.2</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">0.5.x</span></code></p></td>
+<td><p>TBD</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1.49.x</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">4.21.x</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">3.21.5</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>The strategy for these upgrades is as follows:
+- Upgrade <code class="docutils literal notranslate"><span class="pre">grpcio-tools</span></code> as necessary. For example, <code class="docutils literal notranslate"><span class="pre">0.5.x</span></code> enables building with Python <code class="docutils literal notranslate"><span class="pre">3.11</span></code>.
+- Match the version of <code class="docutils literal notranslate"><span class="pre">protobuf</span></code> to the version of <code class="docutils literal notranslate"><span class="pre">protoc</span></code> bundled into <code class="docutils literal notranslate"><span class="pre">grpcio-tools</span></code>, or at least <code class="docutils literal notranslate"><span class="pre">3.19.3</span></code>.
+- Each upgrade is a breaking upgrade for the semantic version. Since we are currently using <code class="docutils literal notranslate"><span class="pre">0.x</span></code> versions, the minor version is bumped.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">protobuf</span></code> Python runtime introduced a backwards-incompatible change with version <code class="docutils literal notranslate"><span class="pre">4.21</span></code> (matching protoc release <code class="docutils literal notranslate"><span class="pre">3.21</span></code>). Code generated with <code class="docutils literal notranslate"><span class="pre">protoc==3.19</span></code> or newer should be compatible with the <code class="docutils literal notranslate"><span class="pre">4.x</span></code> runtime, which corresponds to the <code class="docutils literal notranslate"><span class="pre">0.4</span></code> release of <code class="docutils literal notranslate"><span class="pre">ansys-tools-protoc-helper</span></code>.</p>
+<p>If you need to support a specific <em>older</em> version of protobuf and / or gRPC, we encourage pinning <code class="docutils literal notranslate"><span class="pre">ansys-tools-protoc-helper</span></code> to its minor version.</p>
 <div class="toctree-wrapper compound">
 </div>
+</section>
 </section>
 </section>
 
@@ -324,7 +388,7 @@
     
     <div class="footer-item">
       <p class="copyright">
-    &copy; Copyright (c) 2022 ANSYS, Inc. All rights reserved.<br>
+    &copy; Copyright (c) 2023 ANSYS, Inc. All rights reserved.<br>
 </p>
     </div>
     
