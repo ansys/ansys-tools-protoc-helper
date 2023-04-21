@@ -138,6 +138,7 @@ The current plan for upgrading ``grpcio-tools`` and ``protobuf`` is as follows:
 +----------------------------------------+----------------+--------------------------+----------------------+--------------------+
 
 The strategy for these upgrades is as follows:
+
 - Upgrade ``grpcio-tools`` as necessary. For example, ``0.5.x`` enables building with Python ``3.11``.
 - Match the version of ``protobuf`` to the version of ``protoc`` bundled into ``grpcio-tools``, or at least ``3.19.3``.
 - Each upgrade is a breaking upgrade for the semantic version. Since we are currently using ``0.x`` versions, the minor version is bumped.

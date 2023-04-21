@@ -31,7 +31,7 @@ test = [
 doc = [
     "sphinx",
     "numpydoc",
-    "pyansys-sphinx-theme",
+    "ansys-sphinx-theme",
     "sphinx-copybutton",
 ]
 
