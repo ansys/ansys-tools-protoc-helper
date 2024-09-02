@@ -7,7 +7,7 @@ import tempfile
 import warnings
 
 from grpc.tools import protoc
-import importlib_resources  # Replace with importlib.resources once only Py3.9+ is supported
+import importlib_resources  # Replace with importlib.resources once only Py3.10+ is supported
 from importlib_resources.abc import Traversable
 import pkg_resources
 
