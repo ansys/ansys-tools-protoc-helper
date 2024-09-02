@@ -1,7 +1,5 @@
 import filecmp
 import glob
-from importlib.abc import Traversable
-import importlib.resources as importlib_resources
 import os
 import pathlib
 import shutil
@@ -9,6 +7,8 @@ import tempfile
 import warnings
 
 from grpc.tools import protoc
+import importlib_resources  # Replace with importlib.resources once only Py3.10+ is supported
+from importlib_resources.abc import Traversable
 import pkg_resources
 
 __all__ = ["compile_proto_files"]
