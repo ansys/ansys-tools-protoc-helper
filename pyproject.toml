@@ -10,7 +10,7 @@ readme = "README.rst"
 license = {file = "LICENSE"}
 classifiers = ["License :: OSI Approved :: MIT License"]
 dynamic = ["version", "description"]
-requires-python = ">=3.8,<3.12"
+requires-python = ">=3.9,<3.12"
 dependencies = [
     "setuptools>=42.0",
     "grpcio-tools==1.49.1",
@@ -46,7 +46,7 @@ name = "ansys.tools.protoc_helper"
 
 [tool.black]
 line-length = 100
-target-version = ['py38']
+target-version = ['py39']
 
 [tool.isort]
 profile = "black"
@@ -59,7 +59,7 @@ src_paths = ["doc", "ansys", "test"]
 convention = "numpy"
 
 [tool.mypy]
-python_version = 3.8
+python_version = "3.9"
 strict = true
 
 [[tool.mypy.overrides]]
