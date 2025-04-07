@@ -7,6 +7,5 @@
 ## Individual Contributors
 
 * [Alex Kaszynski](https://github.com/akaszynski)
-* [Dominik Gresch](https://github.com/greschd)
 * [Maxime Rey](https://github.com/MaxJPRey)
 * [Roberto Pastor Muela](https://github.com/RobPasMue)
