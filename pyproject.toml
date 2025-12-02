@@ -29,7 +29,7 @@ test = [
     "pytest~=6.0",
 ]
 doc = [
-    "sphinx",
+    "sphinx<9",
     "numpydoc",
     "ansys-sphinx-theme",
     "sphinx-copybutton",
