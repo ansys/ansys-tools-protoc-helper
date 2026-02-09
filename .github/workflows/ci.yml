@@ -108,6 +108,7 @@ jobs:
           folder: doc/build/html
 
   build-package:
+    name: Build package
     needs: [docs, test]
     runs-on: ubuntu-latest
     steps:
