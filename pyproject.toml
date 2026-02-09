@@ -10,22 +10,30 @@ readme = "README.rst"
 license = {file = "LICENSE"}
 classifiers = ["License :: OSI Approved :: MIT License"]
 dynamic = ["version", "description"]
-requires-python = ">=3.9,<3.12"
+requires-python = ">=3.10,<3.14"
 dependencies = [
     "setuptools>=42.0",
-    "grpcio-tools==1.49.1",
-    "protobuf==4.21.12",
+    "grpcio-tools==1.59.5",
+    "protobuf==4.24.4",
     "mypy-protobuf==3.1.0",
-    "importlib-resources>=1.3"
 ]
 
-[project.optional-dependencies]
+[dependency-groups]
+
+# NOTE: The `dependency-groups` section is used to define groups of dependencies
+# only available when a developer clones the repository and installs the package
+# for local development.
+dev = [
+    { include-group = "pre-commit" },
+    { include-group = "tests" },
+    { include-group = "doc" },
+]
 pre-commit = [
     "pre-commit~=2.16.0",
-    "mypy==0.931",
-    "types-setuptools==57.4.7",
+    "mypy==1.19.1",
+    "types-setuptools",
 ]
-test = [
+tests = [
     "pytest~=6.0",
 ]
 doc = [
@@ -46,7 +54,7 @@ name = "ansys.tools.protoc_helper"
 
 [tool.black]
 line-length = 100
-target-version = ['py39']
+target-version = ['py310']
 
 [tool.isort]
 profile = "black"

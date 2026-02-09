@@ -1,15 +1,16 @@
 import filecmp
 import glob
+from importlib.abc import Traversable
+from importlib.metadata import EntryPoint, entry_points
+from importlib.resources import as_file, files
 import os
 import pathlib
 import shutil
 import tempfile
+from typing import cast
 import warnings
 
 from grpc.tools import protoc
-import importlib_resources  # Replace with importlib.resources once only Py3.10+ is supported
-from importlib_resources.abc import Traversable
-import pkg_resources
 
 __all__ = ["compile_proto_files"]
 
@@ -36,16 +37,18 @@ def compile_proto_files(target_package: str) -> None:
         f"--proto_path={target_package}",
     ]
     with tempfile.TemporaryDirectory() as proto_include_dir:
-        for entry_point in pkg_resources.iter_entry_points(
-            "ansys.tools.protoc_helper.proto_provider"
-        ):
+        # Type stubs for entry_points are outdated, group parameter is valid in Python 3.10+
+        eps = entry_points(  # type: ignore[call-arg]
+            group="ansys.tools.protoc_helper.proto_provider"
+        )
+        for entry_point in cast("list[EntryPoint]", eps):
             module = entry_point.load()
             if ":" in entry_point.name:
                 module_dest_name = entry_point.name.split(":", 1)[1]
             else:
                 module_dest_name = module.__name__
             relpath = pathlib.Path(proto_include_dir, *(module_dest_name.split(".")))
-            _recursive_copy(importlib_resources.files(module), relpath)
+            _recursive_copy(files(module), relpath)
 
         command.append(f"--proto_path={proto_include_dir}")
 
@@ -72,7 +75,7 @@ def _recursive_copy(src_traversable: Traversable, dest_path: pathlib.Path) -> No
         filename = src_traversable.name
         if filename.endswith(".proto"):
             os.makedirs(dest_path.parent, exist_ok=True)
-            with importlib_resources.as_file(src_traversable) as src_path:
+            with as_file(src_traversable) as src_path:
                 if dest_path.exists():
                     if not filecmp.cmp(src_path, dest_path):
                         warnings.warn(
