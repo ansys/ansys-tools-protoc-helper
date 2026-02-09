@@ -34,7 +34,7 @@ pre-commit = [
     "types-setuptools",
 ]
 tests = [
-    "pytest~=6.0",
+    "pytest~=9.0",
 ]
 doc = [
     "sphinx<9",
