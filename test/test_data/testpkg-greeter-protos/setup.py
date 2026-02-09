@@ -6,8 +6,8 @@ if __name__ == "__main__":
     setuptools.setup(
         name="testpkg-greeter-protos",
         author="ANSYS, Inc.",
-        python_requires=">=3.8",
-        install_requires=["grpcio~=1.0", "protobuf~=4.21", "testpkg-hello-protos"],
+        python_requires=">=3.10",
+        install_requires=["grpcio~=1.0", "protobuf~=6.33", "testpkg-hello-protos"],
         packages=setuptools.find_namespace_packages(".", include=("testpkg.*",)),
         package_data={
             "": ["*.proto", "*.pyi", "py.typed"],

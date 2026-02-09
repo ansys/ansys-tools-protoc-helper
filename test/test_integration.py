@@ -1,4 +1,5 @@
 """Integration tests for end-to-end tests of the protoc-helper."""
+
 import contextlib
 import os
 import pathlib

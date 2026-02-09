@@ -10,6 +10,7 @@ Define commands which can be used in the setuptools ``cmdclass``
 directive to override the default behavior, and compile the .proto
 files before the command is executed.
 """
+
 from setuptools.command.build_py import build_py
 from setuptools.command.develop import develop
 

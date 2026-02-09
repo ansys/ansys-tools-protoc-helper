@@ -1,14 +1,19 @@
 import filecmp
 import glob
-from importlib.abc import Traversable
-from importlib.metadata import EntryPoint, entry_points
+from importlib.metadata import entry_points
 from importlib.resources import as_file, files
 import os
 import pathlib
 import shutil
+import sys
 import tempfile
-from typing import cast
 import warnings
+
+# Once we drop support for Python 3.10, we can remove the importlib wrapper code
+if sys.version_info >= (3, 11):
+    from importlib.resources.abc import Traversable
+else:
+    from importlib.abc import Traversable
 
 from grpc.tools import protoc
 
@@ -37,11 +42,7 @@ def compile_proto_files(target_package: str) -> None:
         f"--proto_path={target_package}",
     ]
     with tempfile.TemporaryDirectory() as proto_include_dir:
-        # Type stubs for entry_points are outdated, group parameter is valid in Python 3.10+
-        eps = entry_points(  # type: ignore[call-arg]
-            group="ansys.tools.protoc_helper.proto_provider"
-        )
-        for entry_point in cast("list[EntryPoint]", eps):
+        for entry_point in entry_points(group="ansys.tools.protoc_helper.proto_provider"):
             module = entry_point.load()
             if ":" in entry_point.name:
                 module_dest_name = entry_point.name.split(":", 1)[1]
