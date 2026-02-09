@@ -1,13 +1,19 @@
 import filecmp
 import glob
-from importlib.abc import Traversable
 from importlib.metadata import entry_points
 from importlib.resources import as_file, files
 import os
 import pathlib
 import shutil
+import sys
 import tempfile
 import warnings
+
+# Once we drop support for Python 3.10, we can remove the importlib wrapper code
+if sys.version_info >= (3, 11):
+    from importlib.resources.abc import Traversable
+else:
+    from importlib.abc import Traversable
 
 from grpc.tools import protoc
 
