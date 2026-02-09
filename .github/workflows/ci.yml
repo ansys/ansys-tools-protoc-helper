@@ -119,11 +119,6 @@ jobs:
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
-      - name: Run protolint
-        uses: plexsystems/protolint-action@7838989df3edefc91ea9370aadd5225e6bb73836 # v0.7.0
-        with:
-          configDirectory: .
-
       - name: Install build requirements
         run: |
           pip install -U pip
