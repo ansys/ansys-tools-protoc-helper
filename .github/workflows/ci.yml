@@ -108,7 +108,6 @@ jobs:
           folder: doc/build/html
 
   build-package:
-    if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
     needs: [docs, test]
     runs-on: ubuntu-latest
     steps:
