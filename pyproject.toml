@@ -10,12 +10,12 @@ readme = "README.rst"
 license = {file = "LICENSE"}
 classifiers = ["License :: OSI Approved :: MIT License"]
 dynamic = ["version", "description"]
-requires-python = ">=3.10,<3.13"
+requires-python = ">=3.10,<3.15"
 dependencies = [
-    "setuptools>=42.0,<82.0",  # Starting on grpcio-tools 1.62.X, we no longer require the upper bound (caused by pkg_resources dependency)
-    "grpcio-tools==1.59.5",
-    "protobuf==4.24.4",
-    "mypy-protobuf==3.1.0",
+    "setuptools>=42.0",
+    "grpcio-tools==1.76.0",
+    "protobuf==5.29.6",
+    "mypy-protobuf==5.0.0",
 ]
 
 [dependency-groups]
