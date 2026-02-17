@@ -146,12 +146,12 @@ The current plan for upgrading ``grpcio-tools`` and ``protobuf`` is as follows:
 .. note::
 
      In order to find the ``protoc`` version, you can run the following command using ``uv`` or ``pip``
-     and substituting the appropriate version (i.e. ``X.Y.Z``)::
+     and substituting the appropriate version (i.e. ``X.Y``)::
 
         # Using uv
-        uv run -q --with='grpcio-tools~=X.Y.Z' python -m grpc_tools.protoc --version
+        uv run -q --with='grpcio-tools~=X.Y.0' python -m grpc_tools.protoc --version
         # Using pip (in a virtual environment)
-        pip install 'grpcio-tools~=X.Y.Z'
+        pip install 'grpcio-tools~=X.Y.0'
         python -m grpc_tools.protoc --version
 
 The strategy for these upgrades is as follows:
