@@ -13,8 +13,8 @@ dynamic = ["version", "description"]
 requires-python = ">=3.10,<3.15"
 dependencies = [
     "setuptools>=42.0",
-    "grpcio-tools==1.76.0",
-    "protobuf==6.33.5",
+    "grpcio-tools==1.71.2",
+    "protobuf==5.29.6",
     "mypy-protobuf==5.0.0",
 ]
 
