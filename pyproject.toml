@@ -10,12 +10,12 @@ readme = "README.rst"
 license = {file = "LICENSE"}
 classifiers = ["License :: OSI Approved :: MIT License"]
 dynamic = ["version", "description"]
-requires-python = ">=3.10,<3.13"
+requires-python = ">=3.10,<3.15"
 dependencies = [
-    "setuptools>=42.0,<82.0",  # Starting on grpcio-tools 1.62.X, we no longer require the upper bound (caused by pkg_resources dependency)
-    "grpcio-tools==1.59.5",
-    "protobuf==4.24.4",
-    "mypy-protobuf==3.1.0",
+    "setuptools>=42.0",
+    "grpcio-tools==1.71.2",
+    "protobuf==5.29.6",
+    "mypy-protobuf==3.6.0",
 ]
 
 [dependency-groups]
@@ -29,12 +29,12 @@ dev = [
     { include-group = "doc" },
 ]
 pre-commit = [
-    "pre-commit~=2.16.0",
+    "pre-commit>=4",
     "mypy==1.19.1",
     "types-setuptools",
 ]
 tests = [
-    "pytest~=6.0",
+    "pytest~=9.0",
 ]
 doc = [
     "sphinx<9",
@@ -60,14 +60,13 @@ target-version = ['py310']
 profile = "black"
 force_sort_within_sections = true
 line_length = 100
-default_section = "THIRDPARTY"
 src_paths = ["doc", "ansys", "test"]
 
 [tool.pydocstyle]
 convention = "numpy"
 
 [tool.mypy]
-python_version = "3.9"
+python_version = "3.10"
 strict = true
 
 [[tool.mypy.overrides]]

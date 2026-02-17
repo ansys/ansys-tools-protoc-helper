@@ -1,4 +1,5 @@
 """A utility for compiling '.proto' files to Python source."""
+
 from ._compile_protos import *
 from ._distutils_overrides import *
 
