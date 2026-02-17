@@ -15,7 +15,7 @@ dependencies = [
     "setuptools>=42.0",
     "grpcio-tools==1.71.2",
     "protobuf==5.29.6",
-    "mypy-protobuf==5.0.0",
+    "mypy-protobuf==3.6.0",
 ]
 
 [dependency-groups]
