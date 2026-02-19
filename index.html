@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>protobuf compilation helper &#8212; ansys-tools-protoc-helper 0.6.0 documentation</title>
+    <title>protobuf compilation helper &#8212; ansys-tools-protoc-helper 0.7.0 documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   
     <link href="_static/css/breadcrumbs.css" rel="stylesheet" />
   
-    <script src="_static/documentation_options.js?v=dda85ae5"></script>
+    <script src="_static/documentation_options.js?v=b9678aa1"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -65,7 +65,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.6.0" />
+  <meta name="docsearch:version" content="0.7.0" />
   </head>
   
   
@@ -133,8 +133,8 @@
       
     
     
-    <img src="_static/pyansys_logo_transparent_black.png" class="logo__image only-light" alt="ansys-tools-protoc-helper 0.6.0 documentation - Home"/>
-    <img src="_static/pyansys_logo_transparent_white.png" class="logo__image only-dark pst-js-only" alt="ansys-tools-protoc-helper 0.6.0 documentation - Home"/>
+    <img src="_static/pyansys_logo_transparent_black.png" class="logo__image only-light" alt="ansys-tools-protoc-helper 0.7.0 documentation - Home"/>
+    <img src="_static/pyansys_logo_transparent_white.png" class="logo__image only-dark pst-js-only" alt="ansys-tools-protoc-helper 0.7.0 documentation - Home"/>
   
   
 </a></div>
@@ -486,7 +486,7 @@
 <th class="head"><p>release date</p></th>
 <th class="head"><p><code class="docutils literal notranslate"><span class="pre">grpcio-tools</span></code> version</p></th>
 <th class="head"><p><code class="docutils literal notranslate"><span class="pre">protobuf</span></code> version</p></th>
-<th class="head"><p><code class="docutils literal notranslate"><span class="pre">protoc</span></code> version</p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">libprotoc</span></code> version</p></th>
 <th class="head"><p>Python version support</p></th>
 </tr>
 </thead>
@@ -495,39 +495,65 @@
 <td><p>2022-12-09</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">1.20.x</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">3.19.3</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">3.7.x</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">7.x</span></code></p></td>
 <td><p>3.7 - 3.10</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">0.3.x</span></code></p></td>
 <td><p>2023-02-20</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">1.25.x</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">3.19.3</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">3.8.x</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8.x</span></code></p></td>
 <td><p>3.7 - 3.10</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">0.4.x</span></code></p></td>
 <td><p>2023-02-20</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">1.44.x</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">3.19.3</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">3.19.2</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">19.2</span></code></p></td>
 <td><p>3.7 - 3.10</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">0.5.x</span></code></p></td>
 <td><p>2024-09-02</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">1.49.x</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">4.21.x</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">3.21.5</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">21.5</span></code></p></td>
 <td><p>3.9 - 3.11</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">0.6.x</span></code></p></td>
 <td><p>2026-02-09</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">1.59.x</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">4.24.x</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">3.24.3</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">24.3</span></code></p></td>
 <td><p>3.10 - 3.12</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">0.7.x</span></code></p></td>
+<td><p>2026-02-19</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1.71.x</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">5.29.x</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">29.x</span></code></p></td>
+<td><p>3.10 - 3.14</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">0.8.x</span></code></p></td>
+<td><p>TBD</p></td>
+<td><p>TBD</p></td>
+<td><p>TBD</p></td>
+<td><p>TBD</p></td>
+<td><p>TBD</p></td>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In order to find the <code class="docutils literal notranslate"><span class="pre">protoc</span></code> version, you can run the following command using <code class="docutils literal notranslate"><span class="pre">uv</span></code> or <code class="docutils literal notranslate"><span class="pre">pip</span></code>
+and substituting the appropriate version (i.e. <code class="docutils literal notranslate"><span class="pre">X.Y</span></code>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Using uv</span>
+<span class="n">uv</span> <span class="n">run</span> <span class="o">-</span><span class="n">q</span> <span class="o">--</span><span class="k">with</span><span class="o">=</span><span class="s1">&#39;grpcio-tools~=X.Y.0&#39;</span> <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">grpc_tools</span><span class="o">.</span><span class="n">protoc</span> <span class="o">--</span><span class="n">version</span>
+<span class="c1"># Using pip (in a virtual environment)</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="s1">&#39;grpcio-tools~=X.Y.0&#39;</span>
+<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">grpc_tools</span><span class="o">.</span><span class="n">protoc</span> <span class="o">--</span><span class="n">version</span>
+</pre></div>
+</div>
 </div>
 <p>The strategy for these upgrades is as follows:</p>
 <ul class="simple">
