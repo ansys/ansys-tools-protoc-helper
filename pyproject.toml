@@ -7,15 +7,16 @@ name = "ansys-tools-protoc-helper"
 authors = [{name = "ANSYS, Inc."}]
 maintainers = [{name = "PyAnsys developers", "email" = "pyansys.support@ansys.com"}]
 readme = "README.rst"
-license = {file = "LICENSE"}
-classifiers = ["License :: OSI Approved :: MIT License"]
+license = "MIT"
+license-files = ["LICENSE"]
+classifiers = []
 dynamic = ["version", "description"]
 requires-python = ">=3.10,<3.15"
 dependencies = [
     "setuptools>=42.0",
     "grpcio-tools==1.71.2",
     "protobuf==5.29.6",
-    "mypy-protobuf==3.6.0",
+    "mypy-protobuf==3.6.0"
 ]
 
 [dependency-groups]
@@ -26,21 +27,21 @@ dependencies = [
 dev = [
     { include-group = "pre-commit" },
     { include-group = "tests" },
-    { include-group = "doc" },
+    { include-group = "doc" }
 ]
 pre-commit = [
     "pre-commit>=4",
     "mypy==1.19.1",
-    "types-setuptools",
+    "types-setuptools"
 ]
 tests = [
-    "pytest~=9.0",
+    "pytest~=9.0"
 ]
 doc = [
     "sphinx<9",
     "numpydoc",
     "ansys-sphinx-theme",
-    "sphinx-copybutton",
+    "sphinx-copybutton"
 ]
 
 [project.urls]
@@ -71,6 +72,6 @@ strict = true
 
 [[tool.mypy.overrides]]
 module = [
-    "grpc.*",
+    "grpc.*"
 ]
 ignore_missing_imports = true
