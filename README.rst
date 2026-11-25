@@ -140,7 +140,7 @@ The current plan for upgrading ``grpcio-tools`` and ``protobuf`` is as follows:
 +----------------------------------------+----------------+--------------------------+----------------------+-----------------------+-----------------------+
 | ``0.7.x``                              | 2026-02-19     | ``1.71.x``               | ``5.29.x``           | ``29.x``              | 3.10 - 3.14           |
 +----------------------------------------+----------------+--------------------------+----------------------+-----------------------+-----------------------+
-| ``0.8.x``                              | TBD            | TBD                      | TBD                  | TBD                   | TBD                   |
+| ``0.8.x``                              | TBD            | ``1.75.x``               | ``6.33.5``           | ``31.1``              | 3.10 - 3.14           |
 +----------------------------------------+----------------+--------------------------+----------------------+-----------------------+-----------------------+
 
 .. note::
@@ -158,6 +158,7 @@ The strategy for these upgrades is as follows:
 
 - Upgrade ``grpcio-tools`` as necessary. For example, ``0.5.x`` enables building with Python ``3.11``.
 - Match the version of ``protobuf`` to the version of ``protoc`` bundled into ``grpcio-tools``, or at least ``3.19.3``.
+- Use a newer compatible ``protobuf`` runtime where necessary to include security fixes.
 - Each upgrade is a breaking upgrade for the semantic version. Since we are currently using ``0.x`` versions, the minor version is bumped.
 
 The ``protobuf`` Python runtime introduced a backwards-incompatible change with version ``4.21`` (matching protoc release ``3.21``). Code generated with ``protoc==3.19`` or newer should be compatible with the ``4.x`` runtime, which corresponds to the ``0.4`` release of ``ansys-tools-protoc-helper``.
