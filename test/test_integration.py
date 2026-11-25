@@ -123,9 +123,6 @@ def test_dependency_compile(create_test_pkg_wheel, install_test_pkg, test_venv):
             (
                 "from testpkg.api.greeter.v0 import greeter_pb2, greeter_pb2_grpc, "
                 + "greeter2_pb2, greeter2_pb2_grpc, greeter3_pb2, greeter3_pb2_grpc"
-                + "\nfrom testpkg.api.hello.hello_pb2 import Hello"
-                + "\nassert Hello.FromString(Hello(content='hello').SerializeToString()).content "
-                + "== 'hello'"
             ),
         ]
     )

@@ -7,7 +7,7 @@ if __name__ == "__main__":
         name="testpkg-hello-protos",
         author="ANSYS, Inc.",
         python_requires=">=3.10",
-        install_requires=["grpcio~=1.0", "protobuf~=6.33"],
+        install_requires=["grpcio~=1.0", "protobuf~=5.29"],
         packages=setuptools.find_namespace_packages(".", include=("testpkg.*",)),
         package_data={
             "": ["*.proto", "*.pyi", "py.typed"],

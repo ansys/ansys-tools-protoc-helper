@@ -49,6 +49,10 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: Set MSVC flags for Python 3.14
+        if: runner.os == 'Windows' && matrix.python-version == '3.14'
+        run: echo "GRPC_PYTHON_CFLAGS=/std:c++17 /MT" >> $env:GITHUB_ENV
+
       - name: Install development requirements
         run: |
           python -m pip install --upgrade pip
